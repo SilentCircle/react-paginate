@@ -28,7 +28,9 @@ export default class PaginationBoxView extends Component {
     previousLinkClassName : PropTypes.string,
     nextLinkClassName     : PropTypes.string,
     disabledClassName     : PropTypes.string,
-    breakClassName        : PropTypes.string
+    breakClassName        : PropTypes.string,
+    titlePrev             : PropTypes.string,
+    titleNext             : PropTypes.string
   };
 
   static defaultProps = {
@@ -39,6 +41,8 @@ export default class PaginationBoxView extends Component {
     previousClassName    : "previous",
     nextClassName        : "next",
     previousLabel        : "Previous",
+    titlePrev            : "Go to the Previous Page",
+    titleNext            : "Go to the Next Page",
     nextLabel            : "Next",
     breakLabel           : "...",
     disabledClassName    : "disabled"
@@ -190,16 +194,19 @@ export default class PaginationBoxView extends Component {
     const nextClasses = classNames(this.props.nextClassName,
                                    {[disabled]: this.state.selected === this.props.pageNum - 1});
 
+    const prevTab = previousClasses.indexOf("disabled") >= 0 ? null : { tabIndex: 0 };
+    const nextTab = nextClasses.indexOf("disabled") >= 0 ? null : { tabIndex: 0 };
+
     return (
       <ul className={this.props.containerClassName}>
         <li onClick={this.handlePreviousPage} className={previousClasses}>
-          <a className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
+          <a {...prevTab} title={this.props.titlePrev} className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
         </li>
 
         {createFragment(this.pagination())}
 
         <li onClick={this.handleNextPage} className={nextClasses}>
-          <a className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>
+          <a {...nextTab} title={this.props.titleNext} className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>
         </li>
       </ul>
     );
