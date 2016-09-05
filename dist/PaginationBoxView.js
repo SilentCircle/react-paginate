@@ -177,6 +177,8 @@ var PaginationBoxView = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var disabled = this.props.disabledClassName;
 
       var previousClasses = (0, _classnames2.default)(this.props.previousClassName, _defineProperty({}, disabled, this.state.selected === 0));
@@ -186,6 +188,13 @@ var PaginationBoxView = function (_Component) {
       var prevTab = previousClasses.indexOf("disabled") >= 0 ? null : { tabIndex: 0 };
       var nextTab = nextClasses.indexOf("disabled") >= 0 ? null : { tabIndex: 0 };
 
+      var KEY_ENTER = 13;
+      var handleKeyPaginate = function handleKeyPaginate(event) {
+        if (event.keyCode == KEY_ENTER) {
+          _this2[event.target.dataset.action](event);
+        }
+      };
+
       return _react2.default.createElement(
         'ul',
         { className: this.props.containerClassName },
@@ -194,7 +203,7 @@ var PaginationBoxView = function (_Component) {
           { onClick: this.handlePreviousPage, className: previousClasses },
           _react2.default.createElement(
             'a',
-            _extends({}, prevTab, { title: this.props.titlePrev, className: this.props.previousLinkClassName }),
+            _extends({}, prevTab, { onKeyUp: handleKeyPaginate, 'data-action': 'handlePreviousPage', title: this.props.titlePrev, className: this.props.previousLinkClassName }),
             this.props.previousLabel
           )
         ),
@@ -204,7 +213,7 @@ var PaginationBoxView = function (_Component) {
           { onClick: this.handleNextPage, className: nextClasses },
           _react2.default.createElement(
             'a',
-            _extends({}, nextTab, { title: this.props.titleNext, className: this.props.nextLinkClassName }),
+            _extends({}, nextTab, { onKeyUp: handleKeyPaginate, 'data-action': 'handleNextPage', title: this.props.titleNext, className: this.props.nextLinkClassName }),
             this.props.nextLabel
           )
         )

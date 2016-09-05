@@ -16,12 +16,19 @@ export default class PageView extends React.Component {
       }
     }
 
+    const KEY_ENTER = 13;
+    const handleKeyPaginate = (event) => {
+      if (event.keyCode == KEY_ENTER) {
+        onClick(event);
+      }
+    };
+
     return (
-        <li onClick={onClick} className={cssClassName}>
-            <a tabIndex="0" className={linkClassName}>
-              {this.props.page}
-            </a>
-        </li>
+      <li onClick={onClick} className={cssClassName}>
+        <a tabIndex="0" onKeyUp={handleKeyPaginate} className={linkClassName}>
+          {this.props.page}
+        </a>
+      </li>
     );
   }
 };

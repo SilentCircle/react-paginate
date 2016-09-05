@@ -42,12 +42,19 @@ var PageView = function (_React$Component) {
         }
       }
 
+      var KEY_ENTER = 13;
+      var handleKeyPaginate = function handleKeyPaginate(event) {
+        if (event.keyCode == KEY_ENTER) {
+          onClick(event);
+        }
+      };
+
       return _react2.default.createElement(
         'li',
         { onClick: onClick, className: cssClassName },
         _react2.default.createElement(
           'a',
-          { tabIndex: '0', className: linkClassName },
+          { tabIndex: '0', onKeyUp: handleKeyPaginate, className: linkClassName },
           this.props.page
         )
       );

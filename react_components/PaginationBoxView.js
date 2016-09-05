@@ -197,16 +197,23 @@ export default class PaginationBoxView extends Component {
     const prevTab = previousClasses.indexOf("disabled") >= 0 ? null : { tabIndex: 0 };
     const nextTab = nextClasses.indexOf("disabled") >= 0 ? null : { tabIndex: 0 };
 
+    const KEY_ENTER = 13;
+    const handleKeyPaginate = (event) => {
+      if (event.keyCode == KEY_ENTER) {
+        this[event.target.dataset.action](event);
+      }
+    };
+
     return (
       <ul className={this.props.containerClassName}>
         <li onClick={this.handlePreviousPage} className={previousClasses}>
-          <a {...prevTab} title={this.props.titlePrev} className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
+          <a {...prevTab} onKeyUp={handleKeyPaginate} data-action="handlePreviousPage" title={this.props.titlePrev} className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
         </li>
 
         {createFragment(this.pagination())}
 
         <li onClick={this.handleNextPage} className={nextClasses}>
-          <a {...nextTab} title={this.props.titleNext} className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>
+          <a {...nextTab} onKeyUp={handleKeyPaginate} data-action="handleNextPage" title={this.props.titleNext} className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>
         </li>
       </ul>
     );
