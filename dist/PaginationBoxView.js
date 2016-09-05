@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -181,6 +183,9 @@ var PaginationBoxView = function (_Component) {
 
       var nextClasses = (0, _classnames2.default)(this.props.nextClassName, _defineProperty({}, disabled, this.state.selected === this.props.pageNum - 1));
 
+      var prevTab = previousClasses.indexOf("disabled") >= 0 ? null : { tabIndex: 0 };
+      var nextTab = nextClasses.indexOf("disabled") >= 0 ? null : { tabIndex: 0 };
+
       return _react2.default.createElement(
         'ul',
         { className: this.props.containerClassName },
@@ -189,7 +194,7 @@ var PaginationBoxView = function (_Component) {
           { onClick: this.handlePreviousPage, className: previousClasses },
           _react2.default.createElement(
             'a',
-            { className: this.props.previousLinkClassName },
+            _extends({}, prevTab, { title: this.props.titlePrev, className: this.props.previousLinkClassName }),
             this.props.previousLabel
           )
         ),
@@ -199,7 +204,7 @@ var PaginationBoxView = function (_Component) {
           { onClick: this.handleNextPage, className: nextClasses },
           _react2.default.createElement(
             'a',
-            { className: this.props.nextLinkClassName },
+            _extends({}, nextTab, { title: this.props.titleNext, className: this.props.nextLinkClassName }),
             this.props.nextLabel
           )
         )
@@ -229,7 +234,9 @@ PaginationBoxView.propTypes = {
   previousLinkClassName: _react.PropTypes.string,
   nextLinkClassName: _react.PropTypes.string,
   disabledClassName: _react.PropTypes.string,
-  breakClassName: _react.PropTypes.string
+  breakClassName: _react.PropTypes.string,
+  titlePrev: _react.PropTypes.string,
+  titleNext: _react.PropTypes.string
 };
 PaginationBoxView.defaultProps = {
   pageNum: 10,
@@ -239,6 +246,8 @@ PaginationBoxView.defaultProps = {
   previousClassName: "previous",
   nextClassName: "next",
   previousLabel: "Previous",
+  titlePrev: "Go to the Previous Page",
+  titleNext: "Go to the Next Page",
   nextLabel: "Next",
   breakLabel: "...",
   disabledClassName: "disabled"
